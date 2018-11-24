@@ -1,0 +1,30 @@
+version: '3.3'
+
+services:
+  web:
+    container_name: web
+    build:
+      dockerfile: Dockerfile
+      context: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql_database
+    environment:
+      - MYSQL_ROOT_USERNAME=root
+      - MYSQL_ROOT_PASSWORD=r00t
+      - PATH_INPUT=/files
+      - COMPOSE_CONVERT_WINDOWS_PATHS=1
+      - HOST_NAME=localhost
+      - START_DELAY=15000
+
+    volumes:
+      - /c/Users/<your_username>/Desktop/exchange-company/input:/files
+
+  mysql_database:
+    container_name: mysql_database
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=r00t
